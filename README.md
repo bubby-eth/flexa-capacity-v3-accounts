@@ -1,6 +1,8 @@
-# FLEXA Capacity v3 Accounts Checker
+# Flexa Capacity v3 Accounts Checker
 
 Query and display AMP staking balances across Flexa Capacity v3 pools for a given user account.
+
+You can view Flexa Capacity v3 pools at [Flexa Capacity v3](https://app.flexa.co/).
 
 ## Project Structure
 
