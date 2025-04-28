@@ -85,7 +85,8 @@ async function main() {
 
   result.supplyTotal = formatUnits(totalSupplied, 18);
 
-  console.log(JSON.stringify(result, null, 2)); // Print result nicely
+  console.log(result); // final output
+  return result;
 }
 
 main();
