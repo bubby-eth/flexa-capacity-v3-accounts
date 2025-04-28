@@ -64,17 +64,17 @@ This will output a JSON object showing:
 ```json
 {
   "account": "0x123...abc",
-  "totalStakedAmp": "32820.123",
+  "supplyTotal": "32820.123",
   "pools": [
     {
       "name": "Ethereum",
       "address": "0x9477dA44A61ceBCDD0383CD00Bf18A859FEb75b0",
-      "stakedAmp": "24500.123"
+      "supplied": "24500.123"
     },
     {
       "name": "Bitcoin",
       "address": "0xdB07414039F5e1618E3eCC8019C1C1ecb4b4C06A",
-      "stakedAmp": "8320.000"
+      "supplied": "8320.000"
     }
   ]
 }

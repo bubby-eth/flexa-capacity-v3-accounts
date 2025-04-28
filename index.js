@@ -1,16 +1,22 @@
 require("dotenv").config();
 const { JsonRpcProvider, Contract, formatUnits } = require("ethers");
 
+// ABI for Flexa pool contracts
 const POOL_ABI = [
   "function getAccountPoolBalance(address _accountAddress, address _tokenAddress) view returns (uint256)",
 ];
 
+// Alchemy mainnet RPC setup
 const RPC_URL = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
 const provider = new JsonRpcProvider(RPC_URL);
 
+// User address (who you're checking for)
 const userAddress = process.env.USER_ADDRESS;
+
+// The token we are tracking (AMP)
 const ampToken = "0xfF20817765cB7f73d4bde2e66e067E58D11095C2";
 
+// List of Flexa pools
 const pools = [
   { address: "0xB8706F2dd1Ce8A4328D254cF14271e0fbB5E268A", name: "Burner" },
   {
@@ -41,30 +47,33 @@ const pools = [
 async function main() {
   const result = {
     account: userAddress,
-    totalStakedAmp: "0",
+    supplyTotal: "0",
+    rewardTotal: "0", //will add logic for this soon
     pools: [],
   };
 
-  let totalStaked = 0n; // Start from BigInt zero
+  let totalSupplied = 0n; // Initialize total supplied AMP
+  let totalRewards = 0n; // Initialize total AMP rewards to be claimed
 
   for (const pool of pools) {
     const contract = new Contract(pool.address, POOL_ABI, provider);
 
     try {
-      const staked = await contract.getAccountPoolBalance(
+      const supplied = await contract.getAccountPoolBalance(
         userAddress,
         ampToken
       );
 
-      if (staked > 0n) {
-        const formatted = formatUnits(staked, 18);
+      //add AMP rewards to be claimed logic
+
+      if (supplied > 0n) {
         result.pools.push({
           name: pool.name,
           address: pool.address,
-          stakedAmp: formatted,
+          supplied: formatUnits(supplied, 18),
         });
 
-        totalStaked += staked;
+        totalSupplied += supplied;
       }
     } catch (err) {
       console.error(
@@ -74,10 +83,9 @@ async function main() {
     }
   }
 
-  // Set total after looping
-  result.totalStakedAmp = formatUnits(totalStaked, 18);
+  result.supplyTotal = formatUnits(totalSupplied, 18);
 
-  console.log(JSON.stringify(result, null, 2)); // Pretty print the final object
+  console.log(JSON.stringify(result, null, 2)); // Print result nicely
 }
 
 main();
