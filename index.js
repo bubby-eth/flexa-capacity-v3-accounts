@@ -42,6 +42,7 @@ const pools = [
   { address: "0xE932d1a226E962D820a33363DF32FcC95D2559D2", name: "Solana" },
   { address: "0xCD234A11B26F42B391C2838Beb3DA3Bb3A590B66", name: "Tezos" },
   { address: "0xcfBbAE9DCE9a207BaB01E1589e345D3Edc65D842", name: "Zcash" },
+  { address: "0x1693DeCE45b908Ed25244E8b7FFdE4760cB9Ca24", name: "Nexus" },
 ];
 
 async function main() {
